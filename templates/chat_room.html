@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ user_to_chat.username }}</title>
+
+    <!-- Embedded CSS for styling -->
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Messages Area */
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .message strong {
+            color: #007bff;
+        }
+
+        /* Form Section Styling */
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 90%;
+            }
+
+            textarea {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Chat with {{ user_to_chat.username }}</h2>
+
+        <!-- Messages Section -->
+        <div id="messages" class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+                </div>
+            {% empty %}
+                <p>No messages yet. Start the conversation!</p>
+            {% endfor %}
+        </div>
+
+        <!-- Message Input Section -->
+        <form method="POST" class="message-form">
+            {% csrf_token %}
+            <textarea name="message" rows="3" cols="50" placeholder="Type your message here..." required></textarea><br>
+            <button type="submit">Send</button>
+        </form>
+
+        <br>
+        <a href="{% url 'chat_home' %}" class="back-link">Back to Chat Home</a>
+    </div>
+
+</body>
+</html>

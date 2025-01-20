@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .user-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 40px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .user-list li {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .user-list li:hover {
+            background-color: #e0f7fa;
+        }
+
+        .user-list a {
+            text-decoration: none;
+            color: #00796b;
+            font-weight: bold;
+            font-size: 16px;
+            display: block;
+        }
+
+        .user-list a:hover {
+            color: #004d40;
+            text-decoration: underline;
+        }
+
+        .logout {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 30px;
+            display: block;
+            color: #00796b;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: max-content;
+            margin-bottom: 40px;
+        }
+
+        .logout:hover {
+            background-color: #00796b;
+            color: #fff;
+        }
+
+        #messages {
+            width: 80%;
+            max-width: 700px;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow-y: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #messages p {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f1f1f1;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        #messages p span {
+            font-size: 12px;
+            color: #888;
+        }
+
+        #message_input {
+            width: 80%;
+            max-width: 700px;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin: 20px 0;
+            display: block;
+            background-color: #f9f9f9;
+        }
+
+        #message_input:focus {
+            outline: none;
+            border-color: #00796b;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .user-list li {
+                padding: 12px;
+            }
+
+            .logout {
+                margin-top: 20px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px;
+            }
+
+            #messages {
+                width: 100%;
+            }
+
+            #message_input {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Chat Application</h1>
+    <p>Hello, {{ user.username }}! This is your chat homepage.</p>
+
+    <h3>Users:</h3>
+    <ul class="user-list">
+        {% for user in users %}
+            <li>
+                <a href="{% url 'chat_room' user.id %}">{{ user.username }}</a>
+            </li>
+        {% empty %}
+            <p>No other users are available.</p>
+        {% endfor %}
+    </ul>
+
+    <a class="logout" href="{% url 'logout' %}">Log out</a>
+
+    <!-- Chat interface -->
+    <div id="messages"></div>
+    <input type="text" id="message_input" placeholder="Type a message..." />
+
+    <script>
+        // WebSocket logic will be added in the chat room page
+    </script>
+</body>
+</html>
