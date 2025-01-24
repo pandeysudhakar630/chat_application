@@ -8,7 +8,7 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f9f9f9;
-            margin: 0;
+            margin: 0; 
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -169,14 +169,14 @@
         {% endfor %}
     </ul>
 
-    <a class="logout" href="{% url 'logout' %}">Log out</a>
+    <a class="logout" href="{% url 'login' %}">Log out</a>
 
     <!-- Chat interface -->
-    <div id="messages"></div>
+    {% comment %} <div id="messages"></div>
     <input type="text" id="message_input" placeholder="Type a message..." />
 
     <script>
         // WebSocket logic will be added in the chat room page
-    </script>
+    </script> {% endcomment %}
 </body>
 </html>

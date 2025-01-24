@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Message  # Ensure the Message model is correctly implemented
 from django.db.models import Q  # Import Q for complex queries
+from django.contrib import messages  # To show error messages
 from django.http import HttpResponse
 
 # Sign-Up View
@@ -18,10 +19,33 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, "Your account has been created successfully!")  # Success message
             return redirect('chat_home')  # Redirect to chat homepage after signing up
+        else:
+            messages.error(request, "Error: Please ensure your password matches the requirements.")  # Error message
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+# Login View
+def login_view(request):
+    """
+    Checks if the username and password are correct.
+    If login fails, shows an error message.
+    """
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You have logged in successfully!")  # Success message
+            return redirect('chat_home')  # Redirect to chat homepage upon successful login
+        else:
+            messages.error(request, "Invalid username or password. Please try again. If you are a new user, kindly sign up.")  # Error message for invalid login
+
+    return render(request, 'login.html')  # Render the login page if GET request
 
 # Chat Homepage View
 @login_required
@@ -64,7 +88,7 @@ def chat_view(request):
     return render(request, 'chat_room.html')  # Ensure 'chat_room.html' exists in your templates directory
 
 # Index View
-def index(request):
+def index(request): 
     """
     Simple welcome view for the chat app.
     """

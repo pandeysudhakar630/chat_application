@@ -124,4 +124,4 @@ CHANNEL_LAYERS = {
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'  # Ensure the login URL is set to the name of the login view
+LOGIN_REDIRECT_URL = 'chat_home'  # Ensure the login URL is set to the name of the login view

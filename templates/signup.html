@@ -76,6 +76,13 @@
         .signup-container .form-group a:hover {
             text-decoration: underline;
         }
+        .error-messages {
+            margin-bottom: 20px;
+            color: red;
+            font-size: 14px;
+            list-style: none;
+            padding: 0;
+        }
         @media (max-width: 480px) {
             .signup-container {
                 padding: 20px;
@@ -90,20 +97,50 @@
 
     <div class="signup-container">
         <h2>Create an Account</h2>
-        
+
+        <!-- Display any error or success messages here -->
+        {% if messages %}
+            <ul class="error-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
                 {{ form.username }}
+                {% if form.username.errors %}
+                    <ul class="error-messages">
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="password1">Password</label>
                 {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <ul class="error-messages">
+                        {% for error in form.password1.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="password2">Confirm Password</label>
                 {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <ul class="error-messages">
+                        {% for error in form.password2.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="form-group">
                 <button type="submit">Sign Up</button>

@@ -5,3 +5,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin panel
     path('', include('chat.urls')),  # Include URLs from the 'chat' app
 ]
+ 

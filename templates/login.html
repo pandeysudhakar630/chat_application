@@ -76,6 +76,13 @@
         .login-container .form-group a:hover {
             text-decoration: underline;
         }
+        .error-messages {
+            margin-bottom: 20px;
+            color: red;
+            font-size: 14px;
+            list-style: none;
+            padding: 0;
+        }
         @media (max-width: 480px) {
             .login-container {
                 padding: 20px;
@@ -90,8 +97,18 @@
 
     <div class="login-container">
         <h2>Login to Your Account</h2>
-        
-        <form method="POST">
+
+        <!-- Display error messages if login fails -->
+        {% if messages %}
+            <ul class="error-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Login form -->
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -106,6 +123,7 @@
             </div>
         </form>
 
+        <!-- Link to the sign-up page -->
         <div class="form-group">
             <a href="{% url 'signup' %}">Don't have an account? Sign up here</a>
         </div>
